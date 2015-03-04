@@ -153,6 +153,9 @@
         color:white;
         background:black;
     }
+    .view_button {
+        background:#797268 !important;
+    }
     .map-mouse-over{
     /*set color of store highlight and hover over for SVG map*/
     fill: #fdd2d4;
