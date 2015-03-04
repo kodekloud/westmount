@@ -89,7 +89,7 @@
     
     /*hyperlinks*/
     a{
-        color:#0664e6;
+        color:#0664e6 !important;
         text-decoration:inherit;
     }
     
