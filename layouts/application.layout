@@ -107,7 +107,7 @@
     }
     
     .main_window{
-        border:40px solid #eaf1fb;
+        border:40px solid #caccd1;
     }
     .btn-primary{
         background: #d9534f !important;
@@ -155,7 +155,7 @@
         background:white;
     }
     .view_button {
-        background:#797268 !important;
+        background:#6b6966 !important;
     }
     .map-mouse-over{
     /*set color of store highlight and hover over for SVG map*/
@@ -199,7 +199,7 @@
     @media (max-width: 767px) {
         .main_window{
             width:100%;
-            border:15px solid #eaf1fb !important;
+            border:15px solid #caccd1 !important;
             border-top:none !important;
         }  
     }
