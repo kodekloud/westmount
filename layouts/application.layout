@@ -110,8 +110,8 @@
         border:40px solid #caccd1;
     }
     .btn-primary{
-        background: #d9534f !important;
-        border-color:#d43f3a !important;
+        background: #6b6966 !important;
+        border-color:#64625f !important;
         text-align:center;
         color:white !important;
     }
