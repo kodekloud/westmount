@@ -151,7 +151,7 @@
         background:#834b5d;
     }
     #social_media_wrapper a:hover{
-        color:#834b5d;
+        color:#834b5d !important;
         background:white;
     }
     .view_button {
