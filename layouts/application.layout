@@ -164,11 +164,11 @@
     /*inside page banners*/
     .page_banner{
         color:black;
-       background: #788b9a;
+       background: #7d8896;
     }
     
     #description_section{
-        background: #788b9a;
+        background: #7d8896;
     }
     
     .section_header{}
