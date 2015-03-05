@@ -110,7 +110,7 @@
             <span>
                 <br>
                 <label for="newsletter_signup" style="display:none">Agree Terms</label>
-              <input type="checkbox" class="info_check" id="newsletter_signup"/>&nbsp;I agree to receive emails from 10 Dundas East
+              <input type="checkbox" class="info_check" id="newsletter_signup"/>&nbsp;I agree to receive emails from Westmount Shopping Centre
             </span>
             <br>
             <br>
