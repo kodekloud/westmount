@@ -461,7 +461,7 @@ background-color: #FFFFFF ;
                     }
                     
                     
-                    if ((val.store_front_url).indexOf('missing.png') > -1){ val.alt_store_front_url = "http://kodekloud.s3.amazonaws.com/sites/54f5ed6c6e6f64534e000000/5ea9c7428579079f5e802630ec24f59f/sheridan.png" } else { val.alt_store_front_url = getImageURL(val.store_front_url); }
+                    if ((val.store_front_url).indexOf('missing.png') > -1){ val.alt_store_front_url = "http://kodekloud.s3.amazonaws.com/sites/54f756026e6f642619000000/ce9fa06af59f3d7711de057d95843a5a/westmount.png" } else { val.alt_store_front_url = getImageURL(val.store_front_url); }
                     
                     
                     val.hours = (getHoursForIds(val.store_hours))
