@@ -22,6 +22,11 @@ background-color: #FFFFFF ;
 .froala-element img{
     cursor:default !important;
 }
+
+.store_map{
+    margin-bottom:30px;
+    overflow:hidden;
+}
 .marker {
     background: url("http://kodekloud.s3.amazonaws.com/sites/54cfab316e6f6433ad020000/530d3a9b7bc13ce4a511089c23463f99/10dundas_pin.png") no-repeat;
     cursor: pointer;
@@ -32,6 +37,7 @@ background-color: #FFFFFF ;
     text-indent: -9999px;
     width: 50px;
 }
+
 @media (max-width: 767px) {
     #store_desc_container{
         display:none !important;
@@ -57,6 +63,13 @@ background-color: #FFFFFF ;
 <div id="loading_screen">
     <img alt="loading" src="http://kodekloud.s3.amazonaws.com/sites/5447ebb66e6f641987020000/3604f5c26997bea3de504de139debcec/loading.gif"/>
 </div>
+<div id="pop-over">
+    <span class="pull-left">
+        <p id="pop-over-map-name">Default Name</p>
+        <p id="pop-over-map-phone">Phone Number</p>
+    </span>
+    <span class="pullright"><img alt="arrow" src="https://testbucketblurt.s3-us-west-2.amazonaws.com/sites/54205e6a6a616d39c5860000/04dd4f94364d574f0365c89cbafa12c4/btn_search_arrow.png"></span>
+</div>
 <div id="store_title_container">
     <script id="store_title_template" type="x-tmpl-mustache">
         <ul class="breadcrumb">
@@ -66,7 +79,7 @@ background-color: #FFFFFF ;
         </ul>
         <div class="page_banner">
                 <p class="banner_1">{{name}} </p>
-                <p class="banner_2">{{z_coordinate}}</p>
+                
         </div>
     </script>
 </div>
@@ -74,12 +87,14 @@ background-color: #FFFFFF ;
     <div class="inside_page_content">
         <div class="left_column">
             <div class="store_map" id="store_map">
-                <script id="store_deatils_map_template" type="x-tmpl-mustache">
-                    <div class="demo1">
-                        <img alt="map" src="" class="imgMap" id="map_image" />                
-                        <div class="marker" id='scroll_to_marker' data-coords="{{x_coordinate}}, {{y_coordinate}}"></div>   
-                    </div>   
-                </script>
+                <div style="overflow:hidden">
+                    <div id="zControls">
+                        <button class="zoom-in"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button class="zoom-out"><span class="glyphicon glyphicon-minus"></span></button>
+                        
+                    </div>
+                    <div id="map" class="panzoom-elements" style=""></div>
+                </div>
             </div>
             <div id="store_desc_container">
                 <script id="store_desc_template" type="x-tmpl-mustache">
@@ -106,10 +121,10 @@ background-color: #FFFFFF ;
                     </script>
                 </div>
                 
-                <p class="list_section_header" style="display:none" id="job_header" >Jobs</p>
+                <p class="list_section_header" style="display:none" id="job_header" >Careers</p>
                 <div class="promo_list_div" id="job_list_container">
                     <script id="job_list_template" type="x-tmpl-mustache/text">
-                        <a href="../jobs/{{slug}}"><p class="promo_header right_column_header">{{name}}</p></a>
+                        <a href="../careers/{{slug}}"><p class="promo_header right_column_header">{{name}}</p></a>
                         <p class="directory_content promo_date">{{job_type}}</p>
                         <div class="promo_inside_content">
                             <div class="promo_desc_box">
@@ -166,10 +181,10 @@ background-color: #FFFFFF ;
                     </script>
                 </div>
                 
-                <p class="list_section_header" style="display:none" id="mobile_job_header" >Jobs</p>
+                <p class="list_section_header" style="display:none" id="mobile_job_header" >Careers</p>
                 <div class="promo_list_div" id="mobile_job_list_container">
                     <script id="mobile_job_list_template" type="x-tmpl-mustache/text">
-                        <a href="../jobs/{{slug}}"><p class="promo_header right_column_header">{{name}}</p></a>
+                        <a href="../careers/{{slug}}"><p class="promo_header right_column_header">{{name}}</p></a>
                         <p class="directory_content promo_date">{{job_type}}</p>
                         <div class="promo_inside_content">
                             <div class="promo_desc_box">
@@ -217,14 +232,16 @@ background-color: #FFFFFF ;
             renderTemplate("#job_list_container","#job_list_template", jobs, "jobs");
             renderTemplate("#mobile_promo_list_container","#mobile_promo_list_template", store_promos, "promotions");
             renderTemplate("#mobile_job_list_container","#mobile_job_list_template", jobs, "jobs");
-            renderStoreDetailsTemplate('#store_deatils_map_template','#store_map',store_details);
-            var propertyDetails = getPropertyDetails();
-            $("#map_image").attr("src", getPNGMapURL())
+            // renderStoreDetailsTemplate('#store_deatils_map_template','#store_map',store_details);
+            
+            $("#pop-over").hide();
+            renderSVGMap(store_details);
+            
             $(function(){
                 $('.demo1').craftmap({
                     image: {
-                        width: propertyDetails.map_image_width,
-                        height: propertyDetails.map_image_height,
+                        width: 2240,
+                        height: 943,
                         name: 'imgMap'
                     },
                     map: {
@@ -284,6 +301,121 @@ background-color: #FFFFFF ;
         
         loadMallData(renderPageData);
         
+        
+        
+        
+        function renderSVGMap(store_details){
+                var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) );
+
+                if(navigator.appVersion.indexOf("MSIE 9.") == -1){
+                    $('#map').bind('mousemove', function(e){
+                        //console.log(e.pageX+","+e.pageY);
+                       $('#pop-over').css({'top':e.pageY+20,'left':e.pageX-70});
+                    });
+                    var s = Snap("#map");
+                    var store_svg_id = null;
+                    if(store_details.svgmap_region != null && typeof(store_details.svgmap_region)  != 'undefined'){
+                        store_svg_id = "#"+ store_details.svgmap_region;
+                    }
+                    var stores = getStoresList();
+                    Snap.load(getSVGMapURL(), function (f) {
+                        if(store_svg_id!=null){
+                            f.select(store_svg_id).addClass("map-mouse-over");
+                            console.log(store_svg_id)
+                            
+                        }
+                        $.each( stores, function( key, value ) {
+                            if(value.svgmap_region != null && typeof(value.svgmap_region)  != 'undefined'){
+                                var svg_id = "#" + value.svgmap_region;
+                                f.select(svg_id).mouseover(function() {
+                                    if(typeof(value) != 'undefined' && value != null){
+                                        this.addClass("map-mouse-over");
+                                        $("#pop-over").show();
+                                        $("#pop-over-map-name").html(value.name);
+                                        $("#pop-over-map-phone").html(value.phone);
+                                        // console.log(this.getBBox());
+                                    }
+                                              
+                                });
+                                    
+                                //add the mouse up handler for hiding the pop over when done hovering
+                                
+                                    f.select(svg_id).mouseout(function() {
+                                        if (svg_id != store_svg_id) {
+                                            this.removeClass("map-mouse-over");    
+                                        }
+                                        
+                                        $("#pop-over").hide(0);
+                                        
+                                    });
+                                        
+                                
+                                
+                                //add the mouse up function for when the user clicks a store
+                                f.select(svg_id).mouseup(function() {
+                                    
+                                    if(!isMobile && !didPanZoom){
+                                        
+                                        goToStore(value);
+                                    }
+                                    didPanZoom = false;
+                                          
+                                });
+                            }
+                        });
+                        s.append(f.select("svg"));
+                        
+                        
+                        
+                    });
+                    
+                    var startingMapTransform = 'scale(0.56)';
+                    var startingPanX = -200;
+                    var startingPanY = -200;
+                    if(isMobile) {
+                            startingMapTransform = 'scale(.42)';
+                            startingPanX = -150;
+                            startingPanY = -200;
+                    }
+                    $('#loading').hide();
+                    $( "#page_content" ).fadeIn( "fast", function() {
+                        var panzoom = $(".panzoom-elements").panzoom({
+                            cursor: "move",
+                            increment: 0.15,
+                            minScale: 0.15,
+                            maxScale: 20,
+                            transition: true,
+                            duration: 150,
+                            easing: "ease-in-out",
+                            $zoomIn: $('.zoom-in'),
+                            $zoomOut: $('.zoom-out'),
+                            $zoomRange: $('.zoom-range'),
+                            startTransform: startingMapTransform
+                
+                        });
+                        $(".panzoom-elements").panzoom("pan", startingPanX, startingPanY, { relative: true });
+                        
+                        panzoom.on('panzoomchange', function(e, panzoom, matrix, changed) {
+                          didPanZoom = true;
+                        });
+                        
+                        panzoom.on('panzoomend', function(e, panzoom, matrix, changed) {
+                          didPanZoom = false;
+                        });
+                    });
+                }else{
+                    $('#loading').hide();
+                    $('#zControls').hide();
+                    $('#map').hide();
+                    $( "#page_content" ).fadeIn( "fast");
+                }
+            }
+        function goToStore(store_details){
+            if(typeof(store_details) != 'undefined' && store_details != null){
+                window.location.href = "/stores/"+store_details.slug;
+            }
+        }
+        
         function renderTemplate(container, template, collection, type){
             var item_list = [];
             var item_rendered = [];
@@ -329,13 +461,7 @@ background-color: #FFFFFF ;
                     }
                     
                     
-                    if ((val.store_front_url).indexOf('missing.png') > -1){
-                        val.alt_store_front_url = "http://kodekloud.s3.amazonaws.com/sites/54d4e9206e6f64691f000000/5a559199c13efa2cbd2001f37022c6c2/Banner-Image-004_edited.jpg"
-                    } else {
-                        if ((val.store_front_url).indexOf('missing.png') > -1){ val.alt_store_front_url = "http://kodekloud.s3.amazonaws.com/sites/54f756026e6f642619000000/ce9fa06af59f3d7711de057d95843a5a/westmount.png" } else { val.alt_store_front_url = getImageURL(val.store_front_url); } 
-                    }
-                    
-                    // val.alt_store_front_url = getImageURL(val.store_front_url); 
+                    if ((val.store_front_url).indexOf('missing.png') > -1){ val.alt_store_front_url = "http://kodekloud.s3.amazonaws.com/sites/54f5ed6c6e6f64534e000000/5ea9c7428579079f5e802630ec24f59f/sheridan.png" } else { val.alt_store_front_url = getImageURL(val.store_front_url); }
                     
                     
                     val.hours = (getHoursForIds(val.store_hours))
@@ -378,8 +504,6 @@ background-color: #FFFFFF ;
                     } else {
                         val.h = val.day+": Closed"
                     }
-                    
-                    
                     var rendered = Mustache.render(template_html,val);
                     item_rendered.push(rendered);
                     
@@ -469,122 +593,5 @@ background-color: #FFFFFF ;
         
     });
     
-    var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) );
-    $("#pop-over").hide();
-    var didPanZoom = false;
-    var pathArray = window.location.pathname.split( '/' );
-    var slug = pathArray[pathArray.length-1];
-    var store_details = getStoreDetailsBySlug(slug);
-    // renderSVGMap(store_details);
     
-    
-    function renderSVGMap(store_details){
-            if(navigator.appVersion.indexOf("MSIE 9.") == -1){
-                $('#map').bind('mousemove', function(e){
-                    //console.log(e.pageX+","+e.pageY);
-                   $('#pop-over').css({'top':e.pageY+20,'left':e.pageX-70});
-                });
-                // var s = Snap("#map");
-                // var store_svg_id = null;
-                // if(store_details.svgmap_region != null && typeof(store_details.svgmap_region)  != 'undefined'){
-                //     store_svg_id = "#"+ store_details.svgmap_region;
-                // }
-                // var stores = getStoresList();
-                // Snap.load(getSVGMapURL(), function (f) {
-                //     if(store_svg_id!=null){
-                //         f.select(store_svg_id).addClass("map-mouse-over");
-                //         console.log(store_svg_id)
-                        
-                //     }
-                //     $.each( stores, function( key, value ) {
-                //         if(value.svgmap_region != null && typeof(value.svgmap_region)  != 'undefined'){
-                //             var svg_id = "#" + value.svgmap_region;
-                //             f.select(svg_id).mouseover(function() {
-                //                 if(typeof(value) != 'undefined' && value != null){
-                //                     this.addClass("map-mouse-over");
-                //                     $("#pop-over").show();
-                //                     $("#pop-over-map-name").html(value.name);
-                //                     $("#pop-over-map-phone").html(value.phone);
-                //                     // console.log(this.getBBox());
-                //                 }
-                                          
-                //             });
-                                
-                //             //add the mouse up handler for hiding the pop over when done hovering
-                            
-                //                 f.select(svg_id).mouseout(function() {
-                //                     if (svg_id != store_svg_id) {
-                //                         this.removeClass("map-mouse-over");    
-                //                     }
-                                    
-                //                     $("#pop-over").hide(0);
-                                    
-                //                 });
-                                    
-                            
-                            
-                //             //add the mouse up function for when the user clicks a store
-                //             f.select(svg_id).mouseup(function() {
-                                
-                //                 if(!isMobile && !didPanZoom){
-                                    
-                //                     goToStore(value);
-                //                 }
-                //                 didPanZoom = false;
-                                      
-                //             });
-                //         }
-                //     });
-                //     s.append(f.select("svg"));
-                    
-                    
-                    
-                // });
-                
-                var startingMapTransform = 'scale(0.65)';
-                var startingPanX = -200;
-                var startingPanY = -100;
-                if(isMobile) {
-                        startingMapTransform = 'scale(0.20)';
-                        startingPanX = -170;
-                        startingPanY = -200;
-                }
-                $('#loading').hide();
-                $( "#page_content" ).fadeIn( "fast", function() {
-                    var panzoom = $(".panzoom-elements").panzoom({
-                        cursor: "move",
-                        increment: 0.15,
-                        minScale: 0.15,
-                        maxScale: 20,
-                        transition: true,
-                        duration: 150,
-                        easing: "ease-in-out",
-                        $zoomIn: $('.zoom-in'),
-                        $zoomOut: $('.zoom-out'),
-                        $zoomRange: $('.zoom-range'),
-                        startTransform: startingMapTransform
-            
-                    });
-                    $(".panzoom-elements").panzoom("pan", startingPanX, startingPanY, { relative: true });
-                    
-                    panzoom.on('panzoomchange', function(e, panzoom, matrix, changed) {
-                      didPanZoom = true;
-                    });
-                    
-                    panzoom.on('panzoomend', function(e, panzoom, matrix, changed) {
-                      didPanZoom = false;
-                    });
-                });
-            }else{
-                $('#loading').hide();
-                $('#zControls').hide();
-                $('#map').hide();
-                $( "#page_content" ).fadeIn( "fast");
-            }
-        }
-    function goToStore(store_details){
-        if(typeof(store_details) != 'undefined' && store_details != null){
-            window.location.href = "/stores/"+store_details.slug;
-        }
-    }
 </script>
