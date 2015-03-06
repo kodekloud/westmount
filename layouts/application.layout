@@ -323,7 +323,8 @@
                     <div class="search-results" id="search_results" style="display:none">
                         <!-- START MUSTACHE TEMPLATE FOR EVENT ITEM WITH AN IMAGE-->
                         <script id="search_results_template" type="x-tmpl-mustache/text">{% raw %}
-                        <h4 class="list-group-item header" style="{{stores_header_style}}" data-i18n="nav.stores"></h4>
+                        <small><h4 class="list-group-item search-results-count" id="store_results_header" style="display:none;color:gray;margin-top:2px;font-size:14px" data-i18n="nav.stores" onclick="javascript:show_results('store')"></h4></small>
+                        <div class="results_div" id="store_results">
                         {{#stores}}
                             <a href="/stores/{{slug}}" class="list-group-item">
                                 <div class="name">{{name}}</div>
@@ -331,30 +332,40 @@
                                 <div class="phone">{{phone}}</div>
                             </a>
                         {{/stores}}
-                        <h4 class="list-group-item header" style="{{promotions_header_style}}" data-i18n="nav.promotions"></h4>
+                        </div>
+                        <h4 class="list-group-item search-results-count" id="promotions_results_header" style="display:none;color:gray;margin-top:2px;font-size:14px" data-i18n="nav.promotions" onclick="javascript:show_results('promo')"></h4>
+                        <div class="results_div" id="promo_results">
                         {{#promotions}}
                             <a href="/promotions/{{slug}}" class="list-group-item">
                                 <div class="name">{{name}}</div>
                                 <div class="description">{{description_trim}}</div>
                             </a>
                         {{/promotions}}
-                        <h4 class="list-group-item header" style="{{events_header_style}}" data-i18n="nav.events"></h4>
+                        </div>
+                        <h4 class="list-group-item search-results-count" id="events_results_header" style="display:none;color:gray;margin-top:2px;font-size:14px" data-i18n="nav.events" onclick="javascript:show_results('event')"></h4>
+                        <div class="results_div" id="event_results">
                         {{#events}}
                             <a href="/events/{{slug}}" class="list-group-item">
                                 <div class="name">{{name}}</div>
                                 <div class="description">{{description_trim}}</div>
                             </a>
                         {{/events}}
+                        </div>
                         </script>{% endraw %}
                     
                         <ul class="list-group" >
                             
                             <li>
-                            <a  class="close-search list-group-item" style="">
+                            <a  class="close-search list-group-item" style="color:black;font-weight:bold">
                                 <small>
                                     <span class="search-results-count">{{count}} results found.</span>&nbsp;<span data-i18n="general.results"></span> 
                                 </small>
                             </a>
+                            </li>
+                            <li>
+                            <div id="search_results_items" class="search-results-items" style="">
+                            <!--RENDERED BY renderSearchResultsTemplate(..) -->
+                            </div>
                             </li>
                             <li>
                             <a  class="close-search list-group-item" style="">
@@ -373,11 +384,6 @@
                                     </span>
                                 </script>{% endraw %}
                             </a>
-                            </li>
-                            <li>
-                            <div id="search_results_items" class="search-results-items" style="">
-                            <!--RENDERED BY renderSearchResultsTemplate(..) -->
-                            </div>
                             </li>
                         </ul>
                     </div>
@@ -434,6 +440,22 @@
 <script type="text/javascript" src="http://kodekloud.s3.amazonaws.com/sites/54b83f086e6f646b45000000/360754705c291ba7cd4a4a18102adbaf/restart_theme.js"></script>
 <script type="text/javascript" src="http://kodekloud.s3.amazonaws.com/sites/54b83f086e6f646b45000000/360754705c291ba7cd4a4a18102adbaf/collapser.js"></script>
 <script>
+    function show_results(id){
+        
+        if ( $("#"+id+"_results").is(":visible")){
+            $("#"+id+"_results").slideUp();
+            $("#"+id+"_arrow").removeClass("fa-chevron-down", 1000);
+            $("#"+id+"_arrow").addClass("fa-chevron-right", 1000);
+        } else {
+            $(".results_div").slideUp();
+            $(".fa").removeClass("fa-chevron-down", 1000);
+            $(".fa").addClass("fa-chevron-right", 1000);
+            $("#"+id+"_results").slideDown();   
+            $("#"+id+"_arrow").removeClass("fa-chevron-right", 1000);
+            $("#"+id+"_arrow").addClass("fa-chevron-down", 1000);
+        }
+        
+    }
     if(navigator.appVersion.indexOf("MSIE 9.") == -1){
         
     } else {
@@ -534,9 +556,35 @@
                 $('#search_results').hide();
             }else{
                 var search_results = getSearchResults($('#search_input').val(),10,100);
-                $('.search-results-count').html(search_results.summary.count);
+                $('.search-results-count').html("Total Results : "+search_results.summary.count);
                 renderSearchResultsTemplate('#search_results_template','#search_results_items',search_results);
-                // $(document).i18n();
+                if (search_results["stores"]){
+                    if (search_results["stores"].length > 0){
+                        $("#store_results_header").html(search_results["stores"].length+" Stores <i id='store_arrow' class='fa fa-chevron-right pull-right'></i>") ;
+                        $("#store_results_header").show();
+                    }
+                    
+                } else {
+                    $("#store_results_header").hide();
+                }
+                if (search_results["promotions"]){
+                    if (search_results["promotions"].length > 0){
+                        $("#promotions_results_header").html(search_results["promotions"].length+" Promotions <i id='promo_arrow' class='fa fa-chevron-right pull-right'></i>")    ;
+                        $("#promotions_results_header").show();
+                    }
+                    
+                } else {
+                    $("#promotions_results_header").hide();
+                }
+                if (search_results["events"]){
+                    if (search_results["events"].length > 0) {
+                        $("#events_results_header").html(search_results["events"].length+" Events <i id='event_arrow' class='fa fa-chevron-right pull-right'></i>")    
+                        $("#events_results_header").show();
+                    }
+                    
+                } else {
+                    $("#events_results_header").hide();
+                }
             }
         }
         
