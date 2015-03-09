@@ -120,6 +120,7 @@
         background: #6b6966 !important;
         border-color:#64625f !important;
         text-align:center;
+        color:white !important;
     }
     
     /*menu colors*/
