@@ -229,7 +229,7 @@ background-color: #FFFFFF ;
             var jobs = getJobsForIds(store_details.jobs);
             jobs = jobs.reverse();
             jobs_array = []
-             $.each( all_jobs , function( key, val ){
+             $.each( jobs , function( key, val ){
                  today = new Date();
                  webDate = new Date(val.show_on_web_date);
                  if (today >= webDate) {
