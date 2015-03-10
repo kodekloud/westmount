@@ -11,10 +11,15 @@
 <section id="slider_wrapper" class="slider_wrapper">
      <div id="main_flexslider" class="flexslider">
           <ul class="slides" id="home_banner">
+          
             <script id="banner_template" type="x-tmpl-mustache/text">
-       
-               <li class="item" style="background-image: url({{photo_url_abs}})">
+                 
+               <li class="item">
+                <a href="{{url}}" {{css}} onclick="{{noLink}}">
+                    <img src="{{photo_url_abs}}"/>
+                    </a>
                </li>
+              
             </script>
           </ul>
      </div>
@@ -95,8 +100,12 @@
             $.each( repo , function( key, val ) {
                 if( val.name == "banner"){
                     $.each( val.images , function( key, val ) {
-                        val.alt_url = val.photo_url_abs;
+                       if(val.url == ""){
+                           val.css = "style=cursor:default;";
+                           val.noLink = "return false";
+                       }
                         item_list.push(val);
+                       
                     });
                 }
             });
