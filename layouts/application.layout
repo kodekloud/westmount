@@ -217,7 +217,7 @@
                                 <ul>
                                     <li><a href="/stores">Store Directory</a></li>
                                     <li><a href="/map">Centre Map</a></li>
-                                    <li><a href="/office_directory">Office Directory</a></li>
+                                    
                                 </ul>    
                             </div>
                         </li>
@@ -251,7 +251,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/stores">Store Directory</a></li>
                                 <li id="menu_map"><a href="/map">Centre Map</a></li>
-                                <li><a href="/office_directory">Office Directory</a></li>
+                                
                             </ul> 
                          </li>
                          <li id="event_link"><a href="/events">Events</a></li>
