@@ -388,7 +388,7 @@ background-color: #FFFFFF ;
                         
                     });
                     
-                    var startingMapTransform = 'scale(0.56)';
+                    var startingMapTransform = 'scale(0.5)';
                     var startingPanX = -200;
                     var startingPanY = -200;
                     if(isMobile) {
