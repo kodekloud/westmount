@@ -103,11 +103,11 @@
     }
     
     header{
-        background:#d4a26;
+        background:#5b6e7e;
     }
     
     .main_window{
-        border:40px solid #c2d2c9;
+        border:40px solid #caccd1;
     }
     .btn-primary{
         background: #6b6966 !important;
@@ -129,7 +129,7 @@
     }
     
     .navbar .nav li a:hover,.navbar .nav li a:active{
-        color:#dbe4df;
+        color:#c8c8c8;
     }
     
     .site_welcome_msg{
@@ -144,19 +144,19 @@
     }
     /*social media box color*/
     #social_media_wrapper{
-        background:#d4a26;
+        background:#5b6e7e;
     }
     /*social media icon inner color*/
     #social_media_wrapper a{
         color:white;
-        background:#6b6966;
+        background:#834b5d;
     }
     #social_media_wrapper a:hover{
-        color:#6b6966 !important;
+        color:#834b5d !important;
         background:white;
     }
     .view_button {
-        background:#d4a26 !important;
+        background:#6b6966 !important;
     }
     .map-mouse-over{
     /*set color of store highlight and hover over for SVG map*/
@@ -165,11 +165,11 @@
     /*inside page banners*/
     .page_banner{
         color:black;
-       background: #4a775c;
+       background: #7d8896;
     }
     
     #description_section{
-        background: #4a775c;
+        background: #7d8896;
     }
     
     .section_header{}
@@ -184,16 +184,16 @@
     }
     
     .navbar .nav li a:hover {
-        color:#dbe4df !important;
+        color:#b5c8d8 !important;
     
     }
      .site-map-section a:hover {
-         color:#dbe4df !important;
+         color:#b5c8d8 !important;
      }
     @media (max-width: 767px) {
         .main_window{
             width:100%;
-            border:15px solid #c2d2c9 !important;
+            border:15px solid #caccd1 !important;
             border-top:none !important;
         }  
     }
