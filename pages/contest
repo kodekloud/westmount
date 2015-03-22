@@ -52,7 +52,7 @@
      <br>
      <div class="contest_form_div">
            <p class="contest_description">One entry per person.  Winner will be contacted via email and/or telephone.</p>
-            <p>*required fields</p>
+            <br>*required fields
 
          <form action="http://mobilefringe.createsend.com/t/d/s/ilihtd/" method="post" id="contest_form">
             <p style="display:none">
