@@ -123,6 +123,7 @@
             <p>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </p>
+            <p>*required fields</p>
         </form>
      </div>
     </div>
