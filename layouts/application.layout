@@ -105,7 +105,9 @@
     header{
         background:#5b6e7e;
     }
-    
+     p input[type='image']{
+       width:100% !important;
+   }
     .main_window{
         border:40px solid #caccd1;
     }
