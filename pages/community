@@ -53,12 +53,12 @@
         Community Rental Form
     </div>
     <div class="inside_page_content">
-        <p>Hazeldean takes great pride in supporting its community. As a service to the area, Hazeldean does not charge local non-profit organizations for temporary space in the mall.</p>
+        <p>Westmount Shopping Centre takes great pride in supporting its community. As a service to the area, Westmount Shopping Centre does not charge local non-profit organizations for temporary space in the mall.</p>
     
         <p>
             <strong>Community Kiosk Application Form:</strong>
             <br/>
-            Kindly complete this form to enable Hazeldean to process your request and confirm a date. Once your request has been approved, a temporary occupancy agreement will be sent to the contract person listed below. Please note that space will be granted on a first come, first serve basis. In addition, Hazeldean reserves the right to refuse any request which it deems in conflict with the best interests of our merchants or shopping centre. Proof of liability insurance in the amount of three million dollars in Commerical General Liability and $250,000 in Tenant Legal Liability with the following listed as additional insured: PCM Sheridan Inc./Bentall Kennedy(Canada) LP, by its General Partner, Bentall Kennedy(Canada) GP Ltd, must be provided at least five days prior to your commitment date.
+            Kindly complete this form to enable Westmount Shopping Centre to process your request and confirm a date. Once your request has been approved, a temporary occupancy agreement will be sent to the contract person listed below. Please note that space will be granted on a first come, first serve basis. In addition, Westmount Shopping Centre reserves the right to refuse any request which it deems in conflict with the best interests of our merchants or shopping centre. Proof of liability insurance in the amount of three million dollars in Commerical General Liability and $250,000 in Tenant Legal Liability with the following listed as additional insured: PCM Sheridan Inc./Bentall Kennedy(Canada) LP, by its General Partner, Bentall Kennedy(Canada) GP Ltd, must be provided at least five days prior to your commitment date.
         </p>
         <p>If you're a Mississauga based, non-profit organization who wishes to use space in our mall for the purpose of fundraising or raising awareness, please submit the following:</p>
         <div id="send_contact_success" class="alert alert-success" role="alert" style="display:none">
@@ -403,7 +403,7 @@
                 type: "POST",
                 data : { 
                     'send_to': "ardalan@mobilefringe.com", 
-                    'subject': "Hazeldean Community Rental Form Application", 
+                    'subject': "Westmount Shopping Centre Community Rental Form Application", 
                     'body': {
                         "Legal Name of Organization": $('#legalName').val(), 
                         "Operating Name of Organization(if different)": operatingName, 
