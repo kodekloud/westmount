@@ -46,6 +46,7 @@
 </div>
 <div  id="main_content" style="display:none">
     <ul class="breadcrumb">
+    <li><a href="/home">Home</a> </li>
         <li><a href="/leasing">Leasing</a> </li>
         <li class="active">Community Rental Form</li>
     </ul>
