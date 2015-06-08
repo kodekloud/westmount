@@ -344,7 +344,7 @@
                 $("html, body").animate({ scrollTop:  $("label[for='staging']").offset().top }, 1000);
                 $('#staging').focus();
                 return false;
-            }else if ($('#chair').val() === 0 $('#chair').val() === null){
+            }else if ($('#chair').val() === 0 || $('#chair').val() === null){
                 $("html, body").animate({ scrollTop:  $("label[for='chair']").offset().top }, 1000);
                 $('#chair').focus();
                 return false;
