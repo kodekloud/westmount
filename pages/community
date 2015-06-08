@@ -40,7 +40,7 @@
             padding-right: 0px;
         }
         .page_banner {
-          font-size: 18px;
+          font-size: 16px;
         }
     }
 </style>
