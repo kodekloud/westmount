@@ -39,6 +39,9 @@
             padding-left: 0px;
             padding-right: 0px;
         }
+        .page_banner {
+          font-size: 18px;
+        }
     }
 </style>
 <div id="loading_screen">
