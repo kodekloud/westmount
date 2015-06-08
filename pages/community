@@ -328,11 +328,11 @@
                 $("html, body").animate({ scrollTop:  $("label[for='purpose']").offset().top }, 1000);
                 $('#purpose').focus();
                 return false;
-            }else if ($('#hydro').val() == 0){
+            }else if ($('#hydro').val() === 0 || $('#hydro').val() === null){
                 $("html, body").animate({ scrollTop:  $("label[for='hydro']").offset().top }, 1000);
                 $('#hydro').focus();
                 return false;
-            }else if ($('#table').val() == 0){
+            }else if ($('#table').val() === 0 || $('#table').val() === null){
                 $("html, body").animate({ scrollTop:  $("label[for='table']").offset().top }, 1000);
                 $('#table').focus();
                 return false;
@@ -340,11 +340,11 @@
                 $("html, body").animate({ scrollTop:  $("label[for='tableNumber']").offset().top }, 1000);
                 $('#tableNumber').focus();
                 return false;
-            }else if ($('#staging').val() == 0){
+            }else if ($('#staging').val() === 0 || $('#staging').val() === null){
                 $("html, body").animate({ scrollTop:  $("label[for='staging']").offset().top }, 1000);
                 $('#staging').focus();
                 return false;
-            }else if ($('#chair').val() == 0){
+            }else if ($('#chair').val() === 0 $('#chair').val() === null){
                 $("html, body").animate({ scrollTop:  $("label[for='chair']").offset().top }, 1000);
                 $('#chair').focus();
                 return false;
