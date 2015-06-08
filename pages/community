@@ -403,7 +403,7 @@
                 url : "http://mallmaverick.com/send_contact_email",
                 type: "POST",
                 data : { 
-                    'send_to': "RHanley@Bentallkennedy.com", 
+                    'send_to': "mark@mobilefringe.com", 
                     'subject': "Westmount Shopping Centre Community Rental Form Application", 
                     'body': {
                         "Legal Name of Organization": $('#legalName').val(), 
