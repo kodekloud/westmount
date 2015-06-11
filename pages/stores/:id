@@ -573,7 +573,7 @@ background-color: #FFFFFF ;
             $(container).show();
             $(container).html(item_rendered.join(''));
             if (type == "store_details"){
-                if (collection.website != ""){
+                if (collection.website != "" && collection.website != undefined){
                         $("#store_website_link").show();
                 }
             }
