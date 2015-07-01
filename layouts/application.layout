@@ -182,7 +182,10 @@
         color:black;
        background: #7d8896;
     }
-    
+    .contest_image {
+  width: auto;
+  height: auto;
+}
     #description_section{
         background: #7d8896;
     }
